@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>高效jQurry的秘密 | 然而并没有什么卵用</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="讨论jQuery和JavaScript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和JavaScript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。
+首先，在脑子里牢牢记住jQuery就是JavaScript。这意味着我们应该采取相同的编码惯例、风格指南和最佳实践。
+首先，如果你是一个javascript新手，我建议您">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高效jQurry的秘密">
+<meta property="og:url" content="http://yoursite.com/2015/08/06/jquery/index.html">
+<meta property="og:site_name" content="然而并没有什么卵用">
+<meta property="og:description" content="讨论jQuery和JavaScript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和JavaScript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。
+首先，在脑子里牢牢记住jQuery就是JavaScript。这意味着我们应该采取相同的编码惯例、风格指南和最佳实践。
+首先，如果你是一个javascript新手，我建议您">
+<meta property="og:updated_time" content="2015-08-06T11:15:16.939Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高效jQurry的秘密">
+<meta name="twitter:description" content="讨论jQuery和JavaScript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和JavaScript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。
+首先，在脑子里牢牢记住jQuery就是JavaScript。这意味着我们应该采取相同的编码惯例、风格指南和最佳实践。
+首先，如果你是一个javascript新手，我建议您">
+  
+    <link rel="alternative" href="/atom.xml" title="然而并没有什么卵用" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://cdn.720game.cn/img/2015/0112/df6adb.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">3sharp</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一天进步一点</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/WangChaoBro" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/5235512073/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/wang-chao-1018" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">你猜猜我是谁？</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">3sharp</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://cdn.720game.cn/img/2015/0112/df6adb.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">3sharp</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一天进步一点</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/WangChaoBro" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/5235512073/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/wang-chao-1018" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-jquery" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/06/jquery/" class="article-date">
+  	<time datetime="2015-08-06T11:12:15.000Z" itemprop="datePublished">2015-08-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      高效jQurry的秘密
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>讨论jQuery和JavaScript性能的文章并不罕见。然而，本文我计划总结一些速度方面的技巧和我本人的一些建议，来提升你的jQuery和JavaScript代码。好的代码会带来速度的提升。快速渲染和响应意味着更好的用户体验。</p>
+<p>首先，在脑子里牢牢记住jQuery就是JavaScript。这意味着我们应该采取相同的编码惯例、风格指南和最佳实践。</p>
+<p>首先，如果你是一个javascript新手，我建议您阅读 《JavaScript初学者的最佳实践》 ,这是一篇高质量的javascript教程，接触jQuery之前最好先阅读。</p>
+<a id="more"></a>
+<p>正文:<br>当你准备使用jQuery，我强烈建议你遵循下面这些指南：</p>
+<p><strong>缓存变量</strong></p>
+<p>DOM遍历是昂贵的，所以尽量将会重用的元素缓存。</p>
+<pre><code>// 糟糕
+
+h = $(<span class="string">'#element'</span>).height();
+$(<span class="string">'#element'</span>).css(<span class="string">'height'</span>,h-<span class="number">20</span>);
+
+// 建议
+
+<span class="variable">$element</span> = $(<span class="string">'#element'</span>);
+h = <span class="variable">$element</span>.height();
+<span class="variable">$element</span>.css(<span class="string">'height'</span>,h-<span class="number">20</span>);
+</code></pre><p><strong>避免全局变量</strong></p>
+<p>jQuery与JavaScript一样，一般来说，最好确保你的变量在函数作用域内。</p>
+<pre><code>// 糟糕
+
+<span class="variable">$element</span> = $(<span class="string">'#element'</span>);
+h = <span class="variable">$element</span>.height();
+<span class="variable">$element</span>.css(<span class="string">'height'</span>,h-<span class="number">20</span>);
+
+// 建议
+
+var <span class="variable">$element</span> = $(<span class="string">'#element'</span>);
+var h = <span class="variable">$element</span>.height();
+<span class="variable">$element</span>.css(<span class="string">'height'</span>,h-<span class="number">20</span>);
+</code></pre><p><strong>使用匈牙利命名法</strong></p>
+<p>在变量前加$前缀，便于识别出jQuery对象。</p>
+<pre><code>// 糟糕
+
+var first = $(<span class="string">'#first'</span>);
+var second = $(<span class="string">'#second'</span>);
+var <span class="keyword">value</span> = <span class="variable">$first</span>.val();
+
+// 建议 - 在jQuery对象前加$前缀
+
+var <span class="variable">$first</span> = $(<span class="string">'#first'</span>);
+var <span class="variable">$second</span> = $(<span class="string">'#second'</span>),
+var <span class="keyword">value</span> = <span class="variable">$first</span>.val();
+</code></pre><p><strong>使用 Var 链（单 Var 模式）</strong></p>
+<p>将多条var语句合并为一条语句，我建议将未赋值的变量放到后面。</p>
+<pre><code>var 
+  <span class="variable">$first</span> = $(<span class="string">'#first'</span>),
+  <span class="variable">$second</span> = $(<span class="string">'#second'</span>),
+  <span class="keyword">value</span> = <span class="variable">$first</span>.val(),
+  k = <span class="number">3</span>,
+  cookiestring = <span class="string">'SOMECOOKIESPLEASE'</span>,
+  i,
+  j,
+  myArray = {};
+</code></pre><p><strong>请使用’On’</strong></p>
+<p>在新版jQuery中，更短的 on(“click”) 用来取代类似 click() 这样的函数。在之前的版本中 on() 就是 bind()。自从jQuery 1.7版本后，on() 附加事件处理程序的首选方法。然而，出于一致性考虑，你可以简单的全部使用 on()方法。</p>
+<pre><code>// 糟糕
+
+<span class="variable">$first</span>.click(<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css(<span class="string">'border'</span>,<span class="string">'1px solid red'</span>);
+    <span class="variable">$first</span>.css(<span class="string">'color'</span>,<span class="string">'blue'</span>);
+});
+
+<span class="variable">$first</span>.hover(<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css(<span class="string">'border'</span>,<span class="string">'1px solid red'</span>);
+})
+
+// 建议
+<span class="variable">$first</span>.on(<span class="string">'click'</span>,<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css(<span class="string">'border'</span>,<span class="string">'1px solid red'</span>);
+    <span class="variable">$first</span>.css(<span class="string">'color'</span>,<span class="string">'blue'</span>);
+})
+
+<span class="variable">$first</span>.on(<span class="string">'hover'</span>,<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css(<span class="string">'border'</span>,<span class="string">'1px solid red'</span>);
+})
+</code></pre><p><strong>精简javascript</strong></p>
+<p>一般来说,最好尽可能合并函数。</p>
+<pre><code>// 糟糕
+
+<span class="variable">$first</span>.click(<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css(<span class="string">'border'</span>,<span class="string">'1px solid red'</span>);
+    <span class="variable">$first</span>.css(<span class="string">'color'</span>,<span class="string">'blue'</span>);
+});
+
+// 建议
+
+<span class="variable">$first</span>.on(<span class="string">'click'</span>,<span class="keyword">function</span>(){
+    <span class="variable">$first</span>.css({
+        <span class="string">'border'</span>:<span class="string">'1px solid red'</span>,
+        <span class="string">'color'</span>:<span class="string">'blue'</span>
+    });
+});
+</code></pre><p><strong>链式操作</strong></p>
+<p>jQuery实现方法的链式操作是非常容易的。下面利用这一点。</p>
+<pre><code>// 糟糕
+
+<span class="variable">$second</span>.html(<span class="keyword">value</span>);
+<span class="variable">$second</span>.on(<span class="string">'click'</span>,<span class="keyword">function</span>(){
+    alert(<span class="string">'hello everybody'</span>);
+});
+<span class="variable">$second</span>.fadeIn(<span class="string">'slow'</span>);
+<span class="variable">$second</span>.animate({height:<span class="string">'120px'</span>},<span class="number">500</span>);
+
+// 建议
+
+<span class="variable">$second</span>.html(<span class="keyword">value</span>);
+<span class="variable">$second</span>.on(<span class="string">'click'</span>,<span class="keyword">function</span>(){
+    alert(<span class="string">'hello everybody'</span>);
+}).fadeIn(<span class="string">'slow'</span>).animate({height:<span class="string">'120px'</span>},<span class="number">500</span>);
+</code></pre><p><strong>维持代码的可读性</strong></p>
+<p>伴随着精简代码和使用链式的同时，可能带来代码的难以阅读。添加缩紧和换行能起到很好的效果。</p>
+<pre><code>// 糟糕
+
+<span class="variable">$second</span>.html(<span class="keyword">value</span>);
+<span class="variable">$second</span>.on(<span class="string">'click'</span>,<span class="keyword">function</span>(){
+    alert(<span class="string">'hello everybody'</span>);
+}).fadeIn(<span class="string">'slow'</span>).animate({height:<span class="string">'120px'</span>},<span class="number">500</span>);
+
+// 建议
+
+<span class="variable">$second</span>.html(<span class="keyword">value</span>);
+<span class="variable">$second</span>
+    .on(<span class="string">'click'</span>,<span class="keyword">function</span>(){ alert(<span class="string">'hello everybody'</span>);})
+    .fadeIn(<span class="string">'slow'</span>)
+    .animate({height:<span class="string">'120px'</span>},<span class="number">500</span>);
+</code></pre><p><strong>选择短路求值</strong></p>
+<p>短路求值是一个从左到右求值的表达式，用 &amp;&amp;（逻辑与）或 || （逻辑或）操作符。</p>
+<pre><code>// 糟糕
+
+<span class="keyword">function</span> initVar(<span class="variable">$myVar</span>) {
+    if(!<span class="variable">$myVar</span>) {
+        <span class="variable">$myVar</span> = $(<span class="string">'#selector'</span>);
+    }
+}
+
+// 建议
+
+<span class="keyword">function</span> initVar(<span class="variable">$myVar</span>) {
+    <span class="variable">$myVar</span> = <span class="variable">$myVar</span> || $(<span class="string">'#selector'</span>);
+}
+</code></pre><p><strong>选择捷径</strong></p>
+<p>精简代码的其中一种方式是利用编码捷径。</p>
+<pre><code>// 糟糕
+
+<span class="keyword">if</span>(collection.length &gt; <span class="number">0</span>)<span class="decorator">{..}</span>
+
+// 建议
+
+<span class="keyword">if</span>(collection.length)<span class="decorator">{..}</span>
+</code></pre><p><strong>繁重的操作中分离元素</strong></p>
+<p>如果你打算对DOM元素做大量操作（连续设置多个属性或css样式），建议首先分离元素然后在添加。</p>
+<pre><code>// 糟糕
+
+var 
+    <span class="variable">$container</span> = $(<span class="string">"#container"</span>),
+    <span class="variable">$containerLi</span> = $(<span class="string">"#container li"</span>),
+    <span class="variable">$element</span> = null;
+
+<span class="variable">$element</span> = <span class="variable">$containerLi</span>.first(); 
+//... 许多复杂的操作
+
+// better
+
+var 
+    <span class="variable">$container</span> = $(<span class="string">"#container"</span>),
+    <span class="variable">$containerLi</span> = <span class="variable">$container</span>.find(<span class="string">"li"</span>),
+    <span class="variable">$element</span> = null;
+
+<span class="variable">$element</span> = <span class="variable">$containerLi</span>.first().detach(); 
+//... 许多复杂的操作
+
+<span class="variable">$container</span>.append(<span class="variable">$element</span>);
+</code></pre><p><strong>熟记技巧</strong></p>
+<p>你可能对使用jQuery中的方法缺少经验,一定要查看的文档，可能会有一个更好或更快的方法来使用它。</p>
+<pre><code><span class="comment">// 糟糕</span>
+
+$(<span class="string">'#id'</span>).data(key,<span class="keyword">value</span>);
+
+<span class="comment">// 建议 (高效)</span>
+
+$.data(<span class="string">'#id'</span>,key,<span class="keyword">value</span>);
+</code></pre><p><strong>使用子查询缓存的父元素</strong></p>
+<p>正如前面所提到的，DOM遍历是一项昂贵的操作。典型做法是缓存父元素并在选择子元素时重用这些缓存元素。</p>
+<pre><code>// 糟糕
+
+var 
+    <span class="variable">$container</span> = $(<span class="string">'#container'</span>),
+    <span class="variable">$containerLi</span> = $(<span class="string">'#container li'</span>),
+    <span class="variable">$containerLiSpan</span> = $(<span class="string">'#container li span'</span>);
+
+// 建议 (高效)
+
+var 
+    <span class="variable">$container</span> = $(<span class="string">'#container '</span>),
+    <span class="variable">$containerLi</span> = <span class="variable">$container</span>.find(<span class="string">'li'</span>),
+    <span class="variable">$containerLiSpan</span>= <span class="variable">$containerLi</span>.find(<span class="string">'span'</span>);
+</code></pre><p><strong>避免通用选择符</strong></p>
+<p>将通用选择符放到后代选择符中，性能非常糟糕。</p>
+<pre><code><span class="comment">// 糟糕</span>
+
+$(<span class="string">'.container &gt; *'</span>); 
+
+<span class="comment">// 建议</span>
+
+$(<span class="string">'.container'</span>).children();
+</code></pre><p><strong>避免隐式通用选择符</strong></p>
+<p>通用选择符有时是隐式的，不容易发现。</p>
+<pre><code><span class="comment">// 糟糕</span>
+
+$(<span class="string">'.someclass :radio'</span>); 
+
+<span class="comment">// 建议</span>
+
+$(<span class="string">'.someclass input:radio'</span>);
+</code></pre><p><strong>优化选择符</strong></p>
+<p>例如，Id选择符应该是唯一的，所以没有必要添加额外的选择符。</p>
+<pre><code><span class="comment">// 糟糕</span>
+
+$(<span class="string">'div#myid'</span>); 
+$(<span class="string">'div#footer a.myLink'</span>);
+
+<span class="comment">// 建议</span>
+$(<span class="string">'#myid'</span>);
+$(<span class="string">'#footer .myLink'</span>);
+</code></pre><p><strong>避免多个ID选择符</strong></p>
+<p>在此强调，ID 选择符应该是唯一的，不需要添加额外的选择符，更不需要多个后代ID选择符。</p>
+<pre><code><span class="comment">// 糟糕</span>
+
+$(<span class="string">'#outer #inner'</span>); 
+
+<span class="comment">// 建议</span>
+
+$(<span class="string">'#inner'</span>);
+</code></pre><p><strong>坚持最新版本</strong></p>
+<p>新版本通常更好：更轻量级，更高效。显然，你需要考虑你要支持的代码的兼容性。例如，2.0版本不支持ie 6/7/8。</p>
+<p>摒弃弃用方法</p>
+<p>关注每个新版本的废弃方法是非常重要的并尽量避免使用这些方法。</p>
+<pre><code><span class="comment">// 糟糕 - live 已经废弃</span>
+
+$(<span class="string">'#stuff'</span>).live(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+  <span class="built_in">console</span>.log(<span class="string">'hooray'</span>);
+});
+
+<span class="comment">// 建议</span>
+$(<span class="string">'#stuff'</span>).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+  <span class="built_in">console</span>.log(<span class="string">'hooray'</span>);
+});
+<span class="comment">// 注：此处可能不当，应为live能实现实时绑定，delegate或许更合适</span>
+</code></pre><p><strong>利用CDN</strong></p>
+<p>谷歌的CND能保证选择离用户最近的缓存并迅速响应。（使用谷歌CND请自行搜索地址，此处地址以不能使用，推荐jquery官网提供的CDN）。</p>
+<p>必要时组合jQuery和javascript原生代码</p>
+<p>如上所述，jQuery就是javascript，这意味着用jQuery能做的事情，同样可以用原生代码来做。原生代码（或 vanilla）的可读性和可维护性可能不如jQuery，而且代码更长。但也意味着更高效（通常更接近底层代码可读性越差，性能越高，例如：汇编，当然需要更强大的人才可以）。牢记没有任何框架能比原生代码更小，更轻，更高效（注：测试链接已失效，可上网搜索测试代码）。</p>
+<p>鉴于vanilla 和 jQuery之间的性能差异，我强烈建议吸收两人的精华，使用（可能的话）和jQuery等价的原生代码。</p>
+<p>最后忠告</p>
+<p>最后，我记录这篇文章的目的是提高jQuery的性能和其他一些好的建议。如果你想深入的研究对这个话题你会发现很多乐趣。记住，jQuery并非不可或缺，仅是一种选择。思考为什么要使用它。DOM操作？ajax？模版？css动画？还是选择符引擎？或许javascript微型框架或jQuery的定制版是更好的选择。</p>
+<p>注：本文为翻译文章，原文为 “Writing Better jQuery Code”。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/06/plugin/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Web前端常用插件</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="jquery" data-title="高效jQurry的秘密" data-url="http://yoursite.com/2015/08/06/jquery/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 3sharp
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
